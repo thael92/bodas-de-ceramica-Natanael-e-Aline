@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bodas de Cerâmica - Natanael & Aline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+     <!-- Música de fundo -->
+    <audio id="background-music" loop preload="auto">
+        <source src="audio/jeito-meigo.mp3" type="audio/mpeg">
+        <source src="audio/jeito-meigo.ogg" type="audio/ogg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <!-- Controle de música -->
+    <div class="music-control" id="music-control">
+        <button id="music-toggle" class="music-btn">
+            <svg class="music-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+            </svg>
+            <svg class="music-icon pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+            </svg>
+        </button>
+    </div>
+    <section class="hero" id="hero" style="background-image: url('img/fotos01.jpg');">
+        <div class="overlay"></div>
+        <div class="hero-content content-fade-in">
+            <div class="hero-text">
+                <h1 class="hero-title">Natanael & Aline</h1>
+                <p class="hero-subtitle">Bodas de Cerâmica</p>
+                <div class="hero-date">9 anos de amor moldado com carinho</div>
+            </div>
+            <div class="hero-image">
+                <img src="img/fotos02.jpg" alt="Natanael e Aline" class="couple-photo">
+                <div class="ceramic-decoration">
+                    <svg class="ceramic-icon" viewBox="0 0 100 100">
+                        <path d="M20 80 Q50 20 80 80 Q50 90 20 80" fill="none" stroke="currentColor" stroke-width="2" />
+                        <circle cx="50" cy="50" r="3" fill="currentColor" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <section class="story" id="story" style="">
+        <div class="overlay"></div>
+        <div class="container content-fade-in">
+            <div class="section-header">
+                <h2 class="section-title">Nossa História</h2>
+                <p class="section-subtitle">Como dois corações se moldaram em um só</p>
+            </div>
+            <div class="story-content">
+                <div class="story-text">
+                    <p class="romantic-text">"Assim como a argila nas mãos do oleiro, nosso amor foi sendo moldado com
+                        paciência, carinho e dedicação."</p>
+                    <p>Há nove anos, duas vidas se uniram em uma promessa de amor eterno. Cada dia vivido juntos foi
+                        como uma pincelada delicada na obra de arte que é nosso casamento. Celebramos hoje não apenas o
+                        tempo que passou, mas a beleza de cada momento compartilhado.</p>
+                    <p>As Bodas de Cerâmica simbolizam a resistência e a beleza que nosso amor conquistou ao longo
+                        desses anos. Como uma peça de cerâmica única e especial, nosso relacionamento foi cuidadosamente
+                        moldado e fortalecido pelo tempo.</p>
+                </div>
+                <div class="story-image">
+                    <img src="img/fotos04.jpg" alt="Momento especial do casal">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline" id="timeline" style="">
+        <div class="overlay"></div>
+        <div class="container content-fade-in">
+            <h2 class="section-title">Momentos Especiais</h2>
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>O Primeiro Encontro</h3>
+                        <p>Quando nossos olhares se cruzaram pela primeira vez, já sabíamos que algo especial estava
+                            começando.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>O Grande Dia</h3>
+                        <p>O dia em que dissemos "sim" um ao outro, prometendo caminhar juntos por toda a vida.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>9 Anos Juntos</h3>
+                        <p>Hoje celebramos nossa jornada e renovamos nossos votos de amor e cumplicidade.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery" id="gallery" style="">
+        <div class="overlay"></div>
+        <div class="container content-fade-in">
+            <h2 class="section-title">Momentos Inesquecíveis</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item" data-image="img/fotos07.jpg">
+                    <img src="img/fotos07.jpg" alt="Momento especial 1">
+                </div>
+                <div class="gallery-item" data-image="img/fotos08.jpg">
+                    <img src="img/fotos08.jpg" alt="Momento especial 2">
+                </div>
+                <div class="gallery-item" data-image="img/fotos09.jpg">
+                    <img src="img/fotos09.jpg" alt="Momento especial 3">
+                </div>
+                <div class="gallery-item" data-image="img/fotos10.jpg">
+                    <img src="img/fotos10.jpg" alt="Momento especial 4">
+                </div>
+                <div class="gallery-item" data-image="img/fotos02.jpg">
+                    <img src="img/fotos02.jpg" alt="Momento especial 5">
+                </div>
+                <div class="gallery-item" data-image="img/fotos04.jpg">
+                    <img src="img/fotos04.jpg" alt="Momento especial 6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="message" id="message" style="">
+        <div class="overlay"></div>
+        <div class="container content-fade-in">
+            <div class="message-content">
+                <div class="ceramic-animation">
+                    <svg class="pottery-wheel" viewBox="0 0 200 200">
+                        <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="2"
+                            opacity="0.3" />
+                        <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="2"
+                            opacity="0.5" />
+                        <path class="pottery-shape"
+                            d="M100 40 Q120 60 115 100 Q110 140 100 160 Q90 140 85 100 Q80 60 100 40"
+                            fill="currentColor" opacity="0.7" />
+                    </svg>
+                </div>
+                <h2 class="message-title">Para Sempre</h2>
+                <p class="romantic-message">"Como a cerâmica que se fortalece no fogo, nosso amor se torna mais
+                    resistente a cada desafio superado juntos."</p>
+                <p class="message-text">Que possamos continuar moldando nossa história com as mãos entrelaçadas, criando
+                    memórias tão belas e duradouras quanto as mais preciosas obras de arte.</p>
+                <div class="signature">
+                    <p class="signature-text">Com todo nosso amor,</p>
+                    <p class="signature-names">Natanael & Aline</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            
+            <p class="footer-text">Feito com ❤️ para celebrar 9 anos de amor</p>
+        </div>
+    </footer>
+
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close">&times;</span>
+            <img class="lightbox-image" src="" alt="">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
