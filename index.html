@@ -21,17 +21,38 @@
         Seu navegador não suporta o elemento de áudio.
     </audio>
 
-    <!-- Controle de música -->
-    <div class="music-control" id="music-control">
-        <button id="music-toggle" class="music-btn">
-            <svg class="music-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
-            </svg>
-            <svg class="music-icon pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
-            </svg>
-        </button>
+    
+    <!-- Controle de música com mensagem romântica -->
+<div class="music-control" id="music-control">
+    <div class="music-message" id="music-message">
+        <div class="message-bubble">
+            <p class="message-text">Vamos ouvir a 1ª música feita pra você, amor? 💕</p>
+            <div class="message-arrow"></div>
+        </div>
     </div>
+    
+    <button id="music-toggle" class="music-btn">
+        <svg class="music-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+        </svg>
+        <svg class="music-icon pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+        </svg>
+        
+        <!-- Efeito de ondas sonoras -->
+        <div class="sound-waves">
+            <div class="wave wave1"></div>
+            <div class="wave wave2"></div>
+            <div class="wave wave3"></div>
+        </div>
+    </button>
+    
+    <!-- Tooltip com nome da música -->
+    <div class="music-tooltip" id="music-tooltip">
+        <span class="tooltip-text">♪ Jeito Meigo ♪</span>
+    </div>
+</div>
+
     <section class="hero" id="hero" style="background-image: url('img/fotos01.jpg');">
         <div class="overlay"></div>
         <div class="hero-content content-fade-in">
@@ -127,31 +148,132 @@
     </section>
 
     <section class="gallery" id="gallery" style="">
-        <div class="overlay"></div>
-        <div class="container content-fade-in">
+    <div class="overlay"></div>
+    <div class="container content-fade-in">
+        <div class="section-header">
             <h2 class="section-title">Momentos Inesquecíveis</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item" data-image="img/fotos07.jpg">
-                    <img src="img/fotos07.jpg" alt="Momento especial 1">
-                </div>
-                <div class="gallery-item" data-image="img/fotos08.jpg">
-                    <img src="img/fotos08.jpg" alt="Momento especial 2">
-                </div>
-                <div class="gallery-item" data-image="img/fotos09.jpg">
-                    <img src="img/fotos09.jpg" alt="Momento especial 3">
-                </div>
-                <div class="gallery-item" data-image="img/fotos10.jpg">
-                    <img src="img/fotos10.jpg" alt="Momento especial 4">
-                </div>
-                <div class="gallery-item" data-image="img/fotos02.jpg">
-                    <img src="img/fotos02.jpg" alt="Momento especial 5">
-                </div>
-                <div class="gallery-item" data-image="img/fotos04.jpg">
-                    <img src="img/fotos04.jpg" alt="Momento especial 6">
+            <p class="section-subtitle">Cada foto conta uma história de amor</p>
+        </div>
+        
+        <div class="carousel-container">
+            <div class="carousel-wrapper">
+                <div class="carousel-track" id="carousel-track">
+                    <div class="carousel-slide active">
+                        <div class="slide-content">
+                            <img src="img/fotos07.jpg" alt="Momento especial 1" class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-info">
+                                    <h3 class="slide-title">O Início</h3>
+                                    <p class="slide-description">"Nove anos atrás, o destino uniu dois sonhos, iniciando a mais bela de todas as criações."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <img src="img/fotos08.jpg" alt="Momento especial 2" class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-info">
+                                    <h3 class="slide-title">A Conexão</h3>
+                                    <p class="slide-description"> "Cada toque, cada olhar, moldando com carinho a essência do nosso laço."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <img src="img/fotos09.jpg" alt="Momento especial 3" class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-info">
+                                    <h3 class="slide-title">Beleza</h3>
+                                    <p class="slide-description"> "Únicos e perfeitos em nossa imperfeição, como a arte que somos um para o outro."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <img src="img/fotos10.jpg" alt="Momento especial 4" class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-info">
+                                    <h3 class="slide-title">Harmonia/Equilíbrio</h3>
+                                    <p class="slide-description">"A forma que se encontra, a harmonia que floresce em nosso abraço."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <img src="img/fotos02.jpg" alt="Momento especial 5" class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-info">
+                                    <h3 class="slide-title">Memórias</h3>
+                                    <p class="slide-description">"Gravadas em cada memória que construímos."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <img src="img/fotos04.jpg" alt="Momento especial 6" class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-info">
+                                    <h3 class="slide-title">Nosso Futuro</h3>
+                                    <p class="slide-description"> "Infinito é o nosso horizonte, enquanto moldamos o amor para sempre."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
+            <!-- Controles do Carrossel -->
+            <button class="carousel-btn carousel-btn-prev" id="prevBtn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
+            
+            <button class="carousel-btn carousel-btn-next" id="nextBtn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                </svg>
+            </button>
+            
+            <!-- Indicadores -->
+            <div class="carousel-indicators">
+                <button class="indicator active" data-slide="0"></button>
+                <button class="indicator" data-slide="1"></button>
+                <button class="indicator" data-slide="2"></button>
+                <button class="indicator" data-slide="3"></button>
+                <button class="indicator" data-slide="4"></button>
+                <button class="indicator" data-slide="5"></button>
+            </div>
         </div>
-    </section>
+        
+        <!-- Decoração Cerâmica -->
+        <div class="ceramic-elements">
+            <div class="ceramic-vase ceramic-vase-left">
+                <svg viewBox="0 0 100 150" fill="currentColor">
+                    <path d="M30 20 Q50 10 70 20 L75 130 Q50 140 25 130 Z" opacity="0.6"/>
+                    <ellipse cx="50" cy="20" rx="20" ry="5" opacity="0.8"/>
+                </svg>
+            </div>
+            <div class="ceramic-vase ceramic-vase-right">
+                <svg viewBox="0 0 100 150" fill="currentColor">
+                    <path d="M25 25 Q50 15 75 25 L70 135 Q50 145 30 135 Z" opacity="0.6"/>
+                    <ellipse cx="50" cy="25" rx="25" ry="6" opacity="0.8"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
 
     <section class="message" id="message" style="">
         <div class="overlay"></div>
@@ -174,8 +296,8 @@
                 <p class="message-text">Que possamos continuar moldando nossa história com as mãos entrelaçadas, criando
                     memórias tão belas e duradouras quanto as mais preciosas obras de arte.</p>
                 <div class="signature">
-                    <p class="signature-text">Com todo nosso amor,</p>
-                    <p class="signature-names">Natanael & Aline</p>
+                    <p class="signature-text">Com todo  amor,Natanael :</p>
+                    <p class="signature-names">"Meu amor, nesses nove anos, você foi a inspiração para cada curva e cada cor da nossa história. Nosso amor não é apenas uma cerâmica forte, mas a mais bela obra de arte que já ouse</p>
                 </div>
             </div>
         </div>

@@ -650,7 +650,7 @@ section .hero-content {
     color: #CD853F;
     transform: rotate(90deg);
 }
-/* Controle de música */
+/* Controle de música aprimorado */
 .music-control {
     position: fixed;
     top: 20px;
@@ -658,38 +658,576 @@ section .hero-content {
     z-index: 1000;
 }
 
+/* Mensagem romântica */
+.music-message {
+    position: absolute;
+    top: -10px;
+    right: 70px;
+    opacity: 1;
+    animation: messageEntrance 2s ease-out, messagePulse 3s ease-in-out 2s infinite;
+    pointer-events: none;
+}
+
+.message-bubble {
+    background: linear-gradient(135deg, #ff6b9d, #ff8e8e, #ffa8a8);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    max-width: 200px;
+}
+
+.message-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    line-height: 1.3;
+}
+
+.message-arrow {
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid #ff6b9d;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+
+/* Animações da mensagem */
+@keyframes messageEntrance {
+    0% {
+        opacity: 0;
+        transform: translateX(20px) scale(0.8);
+    }
+    50% {
+        transform: translateX(-5px) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes messagePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* Botão de música aprimorado */
 .music-btn {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(244, 228, 193, 0.9));
+    border: 3px solid rgba(139, 69, 19, 0.3);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 
+        0 8px 25px rgba(139, 69, 19, 0.3),
+        0 0 0 0 rgba(139, 69, 19, 0.4);
+    backdrop-filter: blur(15px);
+    position: relative;
+    overflow: hidden;
+}
+
+.music-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(244, 228, 193, 1));
+    transform: scale(1.1) rotate(5deg);
+    border-color: rgba(139, 69, 19, 0.6);
+    box-shadow: 
+        0 12px 35px rgba(139, 69, 19, 0.4),
+        0 0 0 10px rgba(139, 69, 19, 0.1);
+}
+
+.music-btn.playing {
+    animation: musicPlaying 2s ease-in-out infinite;
+    border-color: #ff6b9d;
+    box-shadow: 
+        0 8px 25px rgba(255, 107, 157, 0.4),
+        0 0 0 0 rgba(255, 107, 157, 0.6);
+}
+
+@keyframes musicPlaying {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4), 0 0 0 0 rgba(255, 107, 157, 0.6);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 12px 35px rgba(255, 107, 157, 0.6), 0 0 0 15px rgba(255, 107, 157, 0.2);
+    }
+}
+
+.music-icon {
+    width: 28px;
+    height: 28px;
+    color: #8B4513;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.music-btn.playing .music-icon {
+    color: #ff6b9d;
+}
+
+/* Ondas sonoras */
+.sound-waves {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.music-btn.playing .sound-waves {
+    opacity: 1;
+}
+
+.wave {
+    position: absolute;
+    border: 2px solid #ff6b9d;
+    border-radius: 50%;
+    animation: waveAnimation 2s ease-out infinite;
+}
+
+.wave1 {
+    width: 80px;
+    height: 80px;
+    top: -40px;
+    left: -40px;
+    animation-delay: 0s;
+}
+
+.wave2 {
+    width: 100px;
+    height: 100px;
+    top: -50px;
+    left: -50px;
+    animation-delay: 0.5s;
+}
+
+.wave3 {
+    width: 120px;
+    height: 120px;
+    top: -60px;
+    left: -60px;
+    animation-delay: 1s;
+}
+
+@keyframes waveAnimation {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* Tooltip com nome da música */
+.music-tooltip {
+    position: absolute;
+    bottom: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.music-btn:hover + .music-tooltip,
+.music-btn.playing + .music-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.tooltip-text {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 15px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Esconder mensagem após interação */
+.music-message.hidden {
+    animation: messageExit 0.5s ease-in forwards;
+}
+
+@keyframes messageExit {
+    0% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(20px) scale(0.8);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .music-control {
+        top: 15px;
+        right: 15px;
+    }
+    
+    .music-btn {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .music-icon {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .music-message {
+        right: 60px;
+        top: -5px;
+    }
+    
+    .message-bubble {
+        padding: 10px 14px;
+        max-width: 160px;
+    }
+    
+    .message-text {
+        font-size: 1rem;
+    }
+    
+    .wave1 { width: 60px; height: 60px; top: -30px; left: -30px; }
+    .wave2 { width: 80px; height: 80px; top: -40px; left: -40px; }
+    .wave3 { width: 100px; height: 100px; top: -50px; left: -50px; }
+}
+
+@media (max-width: 480px) {
+    .music-message {
+        right: 55px;
+        top: 0;
+    }
+    
+    .message-bubble {
+        max-width: 140px;
+        padding: 8px 12px;
+    }
+    
+    .message-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* Gallery Section */
+.gallery {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 4rem 0;
+}
+
+.gallery .overlay {
+    background: linear-gradient(
+        135deg,
+        rgba(139, 69, 19, 0.8) 0%,
+        rgba(160, 82, 45, 0.7) 50%,
+        rgba(210, 180, 140, 0.6) 100%
+    );
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.section-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    color: #f4e4c1;
+    font-weight: 300;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Carousel Container */
+.carousel-container {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    z-index: 2;
+}
+
+.carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.carousel-slide {
+    min-width: 100%;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.slide-content {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.carousel-slide.active .carousel-image {
+    transform: scale(1.05);
+}
+
+.slide-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    padding: 3rem 2rem 2rem;
+    transform: translateY(100%);
+    transition: transform 0.6s ease;
+}
+
+.carousel-slide.active .slide-overlay {
+    transform: translateY(0);
+}
+
+.slide-info {
+    color: white;
+    text-align: center;
+}
+
+.slide-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #f4e4c1;
+}
+
+.slide-description {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+/* Carousel Controls */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     background: rgba(255, 255, 255, 0.9);
     border: none;
-    border-radius: 50%;
     width: 50px;
     height: 50px;
+    border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    z-index: 3;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
 }
 
-.music-btn:hover {
-    background: rgba(255, 255, 255, 1);
-    transform: scale(1.1);
+.carousel-btn:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
 }
 
-.music-icon {
+.carousel-btn svg {
     width: 24px;
     height: 24px;
     color: #8B4513;
 }
 
-.music-btn.playing .play-icon {
-    display: none;
+.carousel-btn-prev {
+    left: -25px;
 }
 
-.music-btn.playing .pause-icon {
-    display: block !important;
+.carousel-btn-next {
+    right: -25px;
+}
+
+/* Carousel Indicators */
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active,
+.indicator:hover {
+    background: white;
+    border-color: white;
+    transform: scale(1.2);
+}
+
+/* Ceramic Decorations */
+.ceramic-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ceramic-vase {
+    position: absolute;
+    width: 80px;
+    height: 120px;
+    color: rgba(255, 255, 255, 0.1);
+    animation: float 4s ease-in-out infinite;
+}
+
+.ceramic-vase-left {
+    top: 20%;
+    left: 5%;
+    animation-delay: 0s;
+}
+
+.ceramic-vase-right {
+    bottom: 20%;
+    right: 5%;
+    animation-delay: 2s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2.5rem;
+    }
+    
+    .carousel-container {
+        margin: 0 1rem;
+    }
+    
+    .slide-content {
+        height: 400px;
+    }
+    
+    .slide-title {
+        font-size: 2rem;
+    }
+    
+    .slide-description {
+        font-size: 1rem;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .carousel-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .carousel-btn-prev {
+        left: -20px;
+    }
+    
+    .carousel-btn-next {
+        right: -20px;
+    }
+    
+    .ceramic-vase {
+        width: 60px;
+        height: 90px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-btn-prev {
+        left: 10px;
+    }
+    
+    .carousel-btn-next {
+        right: 10px;
+    }
+    
+    .slide-overlay {
+        padding: 2rem 1rem 1rem;
+    }
+    
+    .slide-title {
+        font-size: 1.8rem;
+    }
 }
 
 

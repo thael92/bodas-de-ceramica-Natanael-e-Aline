@@ -517,29 +517,31 @@ document.addEventListener('mousemove', function(e) {
     }
 });
 
-// Controle de música de fundo
+// Controle de música aprimorado
 document.addEventListener('DOMContentLoaded', function() {
     const audio = document.getElementById('background-music');
     const musicToggle = document.getElementById('music-toggle');
+    const musicMessage = document.getElementById('music-message');
     let isPlaying = false;
+    let messageShown = true;
 
-    // Função para tentar tocar a música
-    function tryPlayMusic() {
-        audio.play().then(() => {
-            isPlaying = true;
-            musicToggle.classList.add('playing');
-        }).catch((error) => {
-            console.log('Autoplay foi bloqueado:', error);
-            // A música não pode ser tocada automaticamente
-            // O usuário precisará clicar no botão
-        });
-    }
+    // Função para esconder a mensagem
+    function hideMessage() {
+        if (messageShown) {
+            musicMessage.classList.add('hidden');
+            setTimeout(() => {
+                musicMessage.style.display = 'none';
+            }, 500);
+            messageShown = false;
+        }
+    }   
 
-    // Tentar tocar a música quando a página carregar
-    tryPlayMusic();
+    
 
     // Controle do botão de música
     musicToggle.addEventListener('click', function() {
+        hideMessage();
+        
         if (isPlaying) {
             audio.pause();
             isPlaying = false;
@@ -554,6 +556,157 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Controlar volume (opcional - volume baixo para música de fundo)
-    audio.volume = 0.3;
+    // Esconder mensagem ao clicar em qualquer lugar da página
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.music-control')) {
+            hideMessage();
+        }
+    });
+
+    // Esconder mensagem após 10 segundos automaticamente
+    setTimeout(hideMessage, 10000);
+
+    // Controlar volume
+    audio.volume = 0.4;
+    
+    // Fade in do volume quando começar a tocar
+    audio.addEventListener('play', function() {
+        let vol = 0;
+        audio.volume = 0;
+        const fadeIn = setInterval(() => {
+            if (vol < 0.4) {
+                vol += 0.02;
+                audio.volume = vol;
+            } else {
+                clearInterval(fadeIn);
+            }
+        }, 50);
+    });
+});
+
+// Carrossel da Galeria
+document.addEventListener('DOMContentLoaded', function() {
+    const track = document.getElementById('carousel-track');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const indicators = document.querySelectorAll('.indicator');
+    
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    let autoSlideInterval;
+    
+    // Função para mostrar slide
+    function showSlide(index) {
+        // Remove active de todos os slides e indicadores
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        // Adiciona active ao slide e indicador atual
+        slides[index].classList.add('active');
+        indicators[index].classList.add('active');
+        
+        // Move o track
+        track.style.transform = `translateX(-${index * 100}%)`;
+        
+        currentSlide = index;
+    }
+    
+    // Função para próximo slide
+    function nextSlide() {
+        const next = (currentSlide + 1) % totalSlides;
+        showSlide(next);
+    }
+    
+    // Função para slide anterior
+    function prevSlide() {
+        const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlide(prev);
+    }
+    
+    
+    
+    // Event listeners para botões
+    nextBtn.addEventListener('click', () => {
+        nextSlide();
+        stopAutoSlide();
+        startAutoSlide(); // Reinicia o autoplay
+    });
+    
+    prevBtn.addEventListener('click', () => {
+        prevSlide();
+        stopAutoSlide();
+        startAutoSlide(); // Reinicia o autoplay
+    });
+    
+    // Event listeners para indicadores
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            showSlide(index);
+            stopAutoSlide();
+            startAutoSlide(); // Reinicia o autoplay
+        });
+    });
+    
+    // Pausar autoplay quando mouse estiver sobre o carrossel
+    const carouselContainer = document.querySelector('.carousel-container');
+    carouselContainer.addEventListener('mouseenter', stopAutoSlide);
+    carouselContainer.addEventListener('mouseleave', startAutoSlide);
+    
+    // Suporte para touch/swipe em dispositivos móveis
+    let startX = 0;
+    let endX = 0;
+    
+    carouselContainer.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        stopAutoSlide();
+    });
+    
+    carouselContainer.addEventListener('touchmove', (e) => {
+        endX = e.touches[0].clientX;
+    });
+    
+    carouselContainer.addEventListener('touchend', () => {
+        const threshold = 50; // Mínimo de pixels para considerar um swipe
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0) {
+                nextSlide(); // Swipe para esquerda = próximo
+            } else {
+                prevSlide(); // Swipe para direita = anterior
+            }
+        }
+        startAutoSlide(); // Reinicia o autoplay
+    });
+    
+    // Suporte para navegação por teclado
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+            stopAutoSlide();
+            startAutoSlide();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+            stopAutoSlide();
+            startAutoSlide();
+        }
+    });
+    
+    // Inicializar o carrossel
+    showSlide(0);
+    startAutoSlide();
+    
+    // Intersection Observer para pausar quando não estiver visível
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                startAutoSlide();
+            } else {
+                stopAutoSlide();
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    observer.observe(carouselContainer);
 });
