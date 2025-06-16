@@ -681,6 +681,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }   
 
+    // Função para tentar tocar a música
+    function tryPlayMusic() {
+        audio.play().then(() => {
+            isPlaying = true;
+            musicToggle.classList.add('playing');
+            hideMessage();
+        }).catch((error) => {
+            console.log('Autoplay foi bloqueado:', error);
+        });
+    }
+
+    // Tentar tocar a música quando a página carregar
+    setTimeout(tryPlayMusic, 2000); // Aguarda 2 segundos antes de tenta
     
 
     // Controle do botão de música
