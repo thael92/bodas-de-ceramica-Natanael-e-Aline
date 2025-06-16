@@ -57,39 +57,184 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-    // Lightbox functionality
+    // Lightbox para imagens do carrossel
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.querySelector('.lightbox-image');
     const lightboxClose = document.querySelector('.lightbox-close');
-
-    // Open lightbox
-    galleryItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const imageSrc = this.getAttribute('data-image');
-            lightboxImage.src = imageSrc;
-            lightbox.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
+    const carouselImages = document.querySelectorAll('.carousel-image');
+    
+    let currentLightboxIndex = 0;
+    const lightboxImages = [];
+    
+    // Coletar todas as imagens do carrossel
+    carouselImages.forEach((img, index) => {
+        lightboxImages.push({
+            src: img.src,
+            alt: img.alt,
+            title: img.closest('.carousel-slide').querySelector('.slide-title')?.textContent || `Imagem ${index + 1}`,
+            description: img.closest('.carousel-slide').querySelector('.slide-description')?.textContent || ''
         });
     });
-
-    // Close lightbox
+    
+    // Função para abrir lightbox
+    function openLightbox(index) {
+        currentLightboxIndex = index;
+        const imageData = lightboxImages[index];
+        
+        lightboxImage.src = imageData.src;
+        lightboxImage.alt = imageData.alt;
+        
+        // Adicionar informações da imagem
+        updateLightboxInfo(imageData);
+        
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Previne scroll da página
+        
+        // Animação de entrada
+        setTimeout(() => {
+            lightbox.classList.add('loaded');
+        }, 50);
+    }
+    
+    // Função para fechar lightbox
+    function closeLightbox() {
+        lightbox.classList.remove('loaded');
+        setTimeout(() => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = ''; // Restaura scroll da página
+        }, 300);
+    }
+    
+    // Função para atualizar informações do lightbox
+    function updateLightboxInfo(imageData) {
+        let infoDiv = lightbox.querySelector('.lightbox-info');
+        if (!infoDiv) {
+            infoDiv = document.createElement('div');
+            infoDiv.className = 'lightbox-info';
+            lightbox.querySelector('.lightbox-content').appendChild(infoDiv);
+        }
+        
+        infoDiv.innerHTML = `
+            <h3 class="lightbox-title">${imageData.title}</h3>
+            <p class="lightbox-description">${imageData.description}</p>
+            <div class="lightbox-counter">${currentLightboxIndex + 1} / ${lightboxImages.length}</div>
+        `;
+    }
+    
+    // Função para navegar no lightbox
+    function navigateLightbox(direction) {
+        if (direction === 'next') {
+            currentLightboxIndex = (currentLightboxIndex + 1) % lightboxImages.length;
+        } else {
+            currentLightboxIndex = (currentLightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+        }
+        
+        const imageData = lightboxImages[currentLightboxIndex];
+        
+        // Animação de transição
+        lightboxImage.style.opacity = '0';
+        setTimeout(() => {
+            lightboxImage.src = imageData.src;
+            lightboxImage.alt = imageData.alt;
+            updateLightboxInfo(imageData);
+            lightboxImage.style.opacity = '1';
+        }, 150);
+    }
+    
+    // Event listeners para abrir lightbox
+    carouselImages.forEach((img, index) => {
+        img.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openLightbox(index);
+        });
+        
+        // Adicionar cursor pointer
+        img.style.cursor = 'pointer';
+    });
+    
+    // Event listener para fechar lightbox
     lightboxClose.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', function(e) {
+    
+    // Fechar ao clicar fora da imagem
+    lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) {
             closeLightbox();
         }
     });
-
-    function closeLightbox() {
-        lightbox.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Re-enable scrolling
-    }
-
-    // Close lightbox with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && lightbox.style.display === 'block') {
-            closeLightbox();
+    
+    // Navegação por teclado no lightbox
+    document.addEventListener('keydown', (e) => {
+        if (lightbox.classList.contains('active')) {
+            switch(e.key) {
+                case 'Escape':
+                    closeLightbox();
+                    break;
+                case 'ArrowLeft':
+                    navigateLightbox('prev');
+                    break;
+                case 'ArrowRight':
+                    navigateLightbox('next');
+                    break;
+            }
         }
+    });
+    
+    // Adicionar botões de navegação ao lightbox
+    function addLightboxNavigation() {
+        const lightboxContent = lightbox.querySelector('.lightbox-content');
+        
+        // Botão anterior
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'lightbox-nav lightbox-prev';
+        prevBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+        `;
+        prevBtn.addEventListener('click', () => navigateLightbox('prev'));
+        
+        // Botão próximo
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'lightbox-nav lightbox-next';
+        nextBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+            </svg>
+        `;
+        nextBtn.addEventListener('click', () => navigateLightbox('next'));
+        
+        lightboxContent.appendChild(prevBtn);
+        lightboxContent.appendChild(nextBtn);
+    }
+    
+    // Inicializar navegação do lightbox
+    addLightboxNavigation();
+    
+    // Suporte para gestos de swipe no lightbox
+    let lightboxStartX = 0;
+    let lightboxEndX = 0;
+    
+    lightbox.addEventListener('touchstart', (e) => {
+        lightboxStartX = e.touches[0].clientX;
+    });
+    
+    lightbox.addEventListener('touchmove', (e) => {
+        lightboxEndX = e.touches[0].clientX;
+    });
+    
+    lightbox.addEventListener('touchend', () => {
+        const threshold = 50;
+        const diff = lightboxStartX - lightboxEndX;
+        
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0) {
+                navigateLightbox('next'); // Swipe esquerda = próxima
+            } else {
+                navigateLightbox('prev'); // Swipe direita = anterior
+            }
+        }
+    });
     });
 
     // Parallax effect for hero section (improved)
@@ -469,7 +614,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add focus styles for keyboard navigation (moved to styles.css)
 
     console.log('🎉 Site das Bodas de Cerâmica carregado com sucesso!');
-});
+
 
 // Service Worker registration for offline functionality (optional)
 if ('serviceWorker' in navigator) {
